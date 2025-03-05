@@ -1,3 +1,5 @@
+package models;
+
 public class Cell {
     int x, y;
     int height;

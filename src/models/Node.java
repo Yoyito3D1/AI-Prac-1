@@ -1,3 +1,5 @@
+package models;
+
 public class Node implements Comparable<Node> {
     Cell cell;
     Node parent;

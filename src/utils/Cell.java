@@ -1,4 +1,4 @@
-package models;
+package utils;
 
 public class Cell {
     int x, y;

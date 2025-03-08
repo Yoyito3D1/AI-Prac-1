@@ -10,6 +10,8 @@ import utils.MapGrid;
 import utils.Node;
 
 public class AStar {
+    public static double costFinal = 0;
+
     public static List<Node> cerca(Node inici, Node fi, MapGrid mapa, int heuristica) {
         PriorityQueue<Node> frontera = new PriorityQueue<>();
         Set<String> visitats = new HashSet<>();
@@ -18,7 +20,7 @@ public class AStar {
         while (!frontera.isEmpty()) {
             Node actual = frontera.poll();
             if (actual.getx() == fi.getx() && actual.gety() == fi.gety()) {
-                return reconstruirCami(actual);
+                return reconstruirCami(actual, mapa);
             }
 
             visitats.add(actual.getx() + "," + actual.gety());
@@ -27,6 +29,7 @@ public class AStar {
                 int nouX = actual.getx() + dir[0];
                 int nouY = actual.gety() + dir[1];
                 if (mapa.isValid(nouX, nouY) && !visitats.contains(nouX + "," + nouY)) {
+                    System.out.println(mapa.getHeight(nouX, nouY));
                     double nouG = actual.getG() + calcularCost(actual, nouX, nouY, mapa);
                     double nouH = calcularHeuristica(nouX, nouY, fi.getx(), fi.gety(), mapa, heuristica);
                     frontera.add(new Node(nouX, nouY, nouG, nouH, actual));
@@ -39,6 +42,7 @@ public class AStar {
     private static double calcularCost(Node actual, int nouX, int nouY, MapGrid mapa) {
         int altActual = mapa.getHeight(actual.getx(), actual.gety());
         int altNova = mapa.getHeight(nouX, nouY);
+        costFinal = altNova + costFinal;
         return altNova > altActual ? 1 + (altNova - altActual) : 1;
     }
 
@@ -53,13 +57,30 @@ public class AStar {
         }
     }
 
-    private static List<Node> reconstruirCami(Node node) {
+    public static double getCostFinal() {
+        return costFinal;
+    }
+
+    private static List<Node> reconstruirCami(Node node, MapGrid mapa) {
         List<Node> cami = new ArrayList<>();
+        costFinal = 0;  // Reinicialitzem abans de calcular el cost final
+    
         while (node != null) {
             cami.add(node);
+            if (node.getParent() != null) {
+                int altActual = mapa.getHeight(node.getParent().getx(), node.getParent().gety());
+                int altNova = mapa.getHeight(node.getx(), node.gety());
+    
+                if (altNova >= altActual) {
+                    costFinal += 1 + (altNova - altActual);
+                } else {
+                    costFinal += 0.5;
+                }
+            }
             node = node.getParent();
         }
         Collections.reverse(cami);
         return cami;
     }
+    
 }

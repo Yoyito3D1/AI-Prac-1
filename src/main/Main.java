@@ -20,5 +20,6 @@ public class Main {
         } else {
             System.out.println("No s'ha trobat cap camí.");
         }
+        System.out.println(AStar.getCostFinal());
     }
 }

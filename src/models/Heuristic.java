@@ -5,7 +5,6 @@ import utils.Node;
 
 class Heuristic {
     public static double desnivellAcumulat(Node actual, Node desti, MapGrid mapa) {
-        // Implementar aquesta heurística aquí
         return 0;
     }
 

@@ -25,6 +25,10 @@ public class Node implements Comparable<Node> {
         return g;
     }
 
+    public double getH() {
+        return h;
+    }
+
     public void setG(double g) {
         this.g = g;
     }

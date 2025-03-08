@@ -1,8 +1,8 @@
 package main;
 
-import models.AStar;
+import algorithms.AStar;
 import utils.MapGrid;
-import utils.Node;
+import models.Node;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class Main {
         List<Node> cami = AStar.cerca(inici, fi, mapa, 1);
         if (cami != null) {
             for (Node node : cami) {
-                System.out.println("(" + node.getx() + ", " + node.gety() + ")");
+                System.out.println("(" + node.getX() + ", " + node.getY() + ")");
             }
         } else {
             System.out.println("No s'ha trobat cap camí.");

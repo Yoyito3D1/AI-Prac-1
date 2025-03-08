@@ -20,7 +20,9 @@ public class MapGrid {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
-                int[] row = Arrays.stream(line.split(" ")).mapToInt(s -> s.equals("X") ? -1 : Integer.parseInt(s)).toArray();
+                int[] row = Arrays.stream(line.split(" "))
+                        .mapToInt(s -> s.equals("X") ? -1 : Integer.parseInt(s))
+                        .toArray();
                 rows.add(row);
             }
         }
@@ -37,6 +39,11 @@ public class MapGrid {
         return x >= 0 && x < width && y >= 0 && y < height && grid[y][x] != -1;
     }
 
-    public int getWidth() { return width; }
-    public int getHeight() { return height; }
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }

@@ -1,9 +1,8 @@
 package models;
 
 import utils.MapGrid;
-import utils.Node;
 
-class Heuristic {
+public class Heuristic {
     public static double desnivellAcumulat(Node actual, Node desti, MapGrid mapa) {
         return 0;
     }

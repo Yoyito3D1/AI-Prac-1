@@ -1,21 +1,16 @@
 package models;
 
 public class Node implements Comparable<Node> {
-    int x, y, altura;
-    double heuristic;
+    int x, y;
+    double g, h;
     Node parent;
 
-    public Node(int x, int y, int altura, double heuristic, Node parent) {
+    public Node(int x, int y, double g, double h, Node parent) {
         this.x = x;
         this.y = y;
-        this.altura = altura;
-        this.heuristic = heuristic;
+        this.g = g;
+        this.h = h;
         this.parent = parent;
-    }
-
-    @Override
-    public int compareTo(Node other) {
-        return Double.compare(this.heuristic, other.heuristic);
     }
 
     public int getX() {
@@ -26,22 +21,6 @@ public class Node implements Comparable<Node> {
         this.x = x;
     }
 
-    public Node getParent() {
-        return parent;
-    }
-
-    public void setParent(Node parent) {
-        this.parent = parent;
-    }
-
-    public double getHeuristic() {
-        return heuristic;
-    }
-
-    public void setHeuristic(double heuristic) {
-        this.heuristic = heuristic;
-    }
-
     public int getY() {
         return y;
     }
@@ -50,11 +29,36 @@ public class Node implements Comparable<Node> {
         this.y = y;
     }
 
-    public int getAltura() {
-        return altura;
+    public double getG() {
+        return g;
     }
 
-    public void setAltura(int altura) {
-        this.altura = altura;
+    public void setG(double g) {
+        this.g = g;
+    }
+
+    public double getH() {
+        return h;
+    }
+
+    public void setH(double h) {
+        this.h = h;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    public double getF() {
+        return g + h;
+    }
+
+    @Override
+    public int compareTo(Node other) {
+        return Double.compare(this.getF(), other.getF());
     }
 }

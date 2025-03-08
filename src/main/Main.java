@@ -14,12 +14,13 @@ public class Main {
         
         List<Node> cami = AStar.cerca(inici, fi, mapa, 1);
         if (cami != null) {
+            System.out.println("La solució de l'A* és:");
             for (Node node : cami) {
                 System.out.println("(" + node.getX() + ", " + node.getY() + ")");
             }
         } else {
             System.out.println("No s'ha trobat cap camí.");
         }
-        System.out.println(AStar.getCostFinal());
+        System.out.println("El cost total de l'A* per arribar al destí és de: " + AStar.getCostFinal());
     }
 }

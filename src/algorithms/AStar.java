@@ -6,13 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
-
+import utils.MapGrid;
 import models.Heuristic;
 import models.Node;
-import utils.MapGrid;
 
 public class AStar {
-    public static int costFinal = 0;
+    public static double costFinal = 0;
 
     public static List<Node> cerca(Node inici, Node fi, MapGrid mapa, int heuristica) {
         PriorityQueue<Node> frontera = new PriorityQueue<>();
@@ -31,9 +30,8 @@ public class AStar {
                 int nouX = actual.getX() + dir[0];
                 int nouY = actual.getY() + dir[1];
                 if (mapa.isValid(nouX, nouY) && !visitats.contains(nouX + "," + nouY)) {
-                    System.out.println(mapa.getHeight(nouX, nouY));
-                    int nouG = actual.getAltura() + calcularCost(actual, nouX, nouY, mapa);
-                    int nouH = calcularHeuristica(nouX, nouY, fi.getX(), fi.getY(), mapa, heuristica);
+                    double nouG = actual.getG() + calcularCost(actual, nouX, nouY, mapa);
+                    double nouH = calcularHeuristica(nouX, nouY, fi.getX(), fi.getY(), mapa, heuristica);
                     frontera.add(new Node(nouX, nouY, nouG, nouH, actual));
                 }
             }
@@ -41,14 +39,14 @@ public class AStar {
         return null; // No s'ha trobat cap camí
     }
 
-    private static int calcularCost(Node actual, int nouX, int nouY, MapGrid mapa) {
+    private static double calcularCost(Node actual, int nouX, int nouY, MapGrid mapa) {
         int altActual = mapa.getHeight(actual.getX(), actual.getY());
         int altNova = mapa.getHeight(nouX, nouY);
         costFinal = altNova + costFinal;
         return altNova > altActual ? 1 + (altNova - altActual) : 1;
     }
 
-    private static int calcularHeuristica(int x, int y, int xf, int yf, MapGrid mapa, int heuristica) {
+    private static double calcularHeuristica(int x, int y, int xf, int yf, MapGrid mapa, int heuristica) {
         Node actual = new Node(x, y, 0, 0, null);
         Node desti = new Node(xf, yf, 0, 0, null);
         switch (heuristica) {
@@ -59,7 +57,7 @@ public class AStar {
         }
     }
 
-    public static int getCostFinal() {
+    public static double getCostFinal() {
         return costFinal;
     }
 

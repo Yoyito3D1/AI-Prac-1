@@ -12,7 +12,7 @@ public class Main {
         Node inici = new Node(0, 0, 0, 0, null);
         Node fi = new Node(9, 9, 0, 0, null);
         
-        List<Node> cami = AStar.search(inici, fi, mapa, 3);
+        List<Node> cami = AStar.search(inici, fi, mapa, 1);
         if (cami != null) {
             System.out.println("La solució de l'A* és:");
             for (Node node : cami) {
@@ -21,7 +21,8 @@ public class Main {
         } else {
             System.out.println("No s'ha trobat cap camí.");
         }
-        System.out.println("El cost total de l'A* per arribar al destí és de: " + AStar.getFinalCost());
+        MapGrid.printPathOnGrid(mapa.getGridMatrix(), cami);
+        System.out.println("El cost total de l'A* per arribar al destí és de: " + MapGrid.getFinalCost());
         System.out.println("El nombre d'iteracions de l'A* és de: " + AStar.getNumIterations());
     }
 }

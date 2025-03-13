@@ -3,7 +3,6 @@ package algorithms;
 import models.Node;
 import services.Heuristic;
 
-
 import java.util.*;
 
 public class BestFirstSearch {
@@ -15,8 +14,8 @@ public class BestFirstSearch {
         boolean[][] visited = new boolean[rows][cols];
         PriorityQueue<Node> openList = new PriorityQueue<>();
 
-        Node startNode = new Node(startX, startY, map[startX][startY],
-                selectHeuristic(startX, startY, endX, endY, map[startX][startY], map[endX][endY], heuristic, heuristicType), null);
+        Node startNode = new Node(startX, startY, 0,
+                selectHeuristic(startX, startY, endX, endY, 0, map[startX][startY], map[endX][endY], heuristic, heuristicType), null);
         openList.add(startNode);
 
         while (!openList.isEmpty()) {
@@ -34,8 +33,9 @@ public class BestFirstSearch {
 
                 if (isValid(newX, newY, rows, cols, visited)) {
                     int newAltura = map[newX][newY];
-                    double h = selectHeuristic(newX, newY, endX, endY, newAltura, map[endX][endY], heuristic, heuristicType);
-                    Node neighbor = new Node(newX, newY, newAltura, h, current);
+                    double g = current.getG() + computeCost(current, newX, newY, map);
+                    double h = selectHeuristic(newX, newY, endX, endY, g, newAltura, map[endX][endY], heuristic, heuristicType);
+                    Node neighbor = new Node(newX, newY, g, h, current);
                     openList.add(neighbor);
                 }
             }
@@ -43,7 +43,7 @@ public class BestFirstSearch {
         return null;
     }
 
-    private static double selectHeuristic(int x, int y, int goalX, int goalY, int height, int goalHeight, Heuristic heuristic, int heuristicType) {
+    private static double selectHeuristic(int x, int y, int goalX, int goalY, double g, int height, int goalHeight, Heuristic heuristic, int heuristicType) {
         switch (heuristicType) {
             case 1:
                 return heuristic.calculateManhattanHeight(x, y, goalX, goalY, height, goalHeight);
@@ -54,6 +54,12 @@ public class BestFirstSearch {
             default:
                 throw new IllegalArgumentException("Invalid heuristic type");
         }
+    }
+
+    private static double computeCost(Node current, int newX, int newY, int[][] map) {
+        int currentHeight = map[current.getX()][current.getY()];
+        int newHeight = map[newX][newY];
+        return (newHeight > currentHeight) ? 1 + (newHeight - currentHeight) : 1;
     }
 
     private static boolean isValid(int x, int y, int rows, int cols, boolean[][] visited) {

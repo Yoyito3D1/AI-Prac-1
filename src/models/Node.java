@@ -4,6 +4,7 @@ public class Node implements Comparable<Node> {
     int x, y;
     double g, h;
     Node parent;
+    private boolean useAStar;
 
     public Node(int x, int y, double g, double h, Node parent) {
         this.x = x;
@@ -12,6 +13,11 @@ public class Node implements Comparable<Node> {
         this.h = h;
         this.parent = parent;
     }
+
+    public void setUseAStar(boolean useAStar) {
+        this.useAStar = useAStar;
+    }
+
 
     public int getX() {
         return x;
@@ -59,6 +65,10 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node other) {
-        return Double.compare(this.getF(), other.getF());
+        if (useAStar) {
+            return Double.compare(this.g + this.h, other.g + other.h); // A* (f = g + h)
+        } else {
+            return Double.compare(this.h, other.h); // Best-First (h only)
+        }
     }
 }

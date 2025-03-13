@@ -9,8 +9,11 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         MapGrid mapa = new MapGrid("src/data/matrix.txt");
+
+        Node.setUseAStar(true);
         Node inici = new Node(0, 0, 0, 0, null);
         Node fi = new Node(9, 9, 0, 0, null);
+
         
         List<Node> cami = AStar.search(inici, fi, mapa, 1);
         if (cami != null) {
@@ -26,3 +29,4 @@ public class Main {
         System.out.println("El nombre d'iteracions de l'A* és de: " + AStar.getNumIterations());
     }
 }
+

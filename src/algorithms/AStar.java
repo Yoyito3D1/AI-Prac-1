@@ -43,8 +43,7 @@ public class AStar {
     private static double computeCost(Node actual, int newX, int newY, MapGrid map) {
         int actualHeight = map.getHeight(actual.getX(), actual.getY());
         int newHeight = map.getHeight(newX, newY);
-        finalCost = newHeight + finalCost
-;
+        finalCost = newHeight + finalCost;
         return newHeight > actualHeight ? 1 + (newHeight - actualHeight) : 1;
     }
 
@@ -55,4 +54,7 @@ public class AStar {
     public static int getNumIterations() {
         return numIterations;
     }
+
+
+
 }
